@@ -21,7 +21,11 @@ export default function Login() {
       localStorage.setItem('token', data.token)
       localStorage.setItem('userName', data.user.nombreCompleto)
       localStorage.setItem('userRol', data.user.rol)
-      navigate('/dashboard', { replace: true })
+      if (data.user.rol === 'admin') {
+        navigate('/admin', { replace: true })
+      } else {
+        navigate('/dashboard', { replace: true })
+      }
     } catch (err) {
       const status = err.response?.status
       if (status === 403) {
