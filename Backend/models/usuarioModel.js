@@ -11,4 +11,9 @@ const updateUsuario = async (id, data) => {
   await db.collection('usuarios').doc(id).update(data)
 }
 
-module.exports = { getUserByEmail, updateUsuario }
+const getAllUsuarios = async () => {
+  const snapshot = await db.collection('usuarios').get()
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+}
+
+module.exports = { getUserByEmail, updateUsuario, getAllUsuarios }
