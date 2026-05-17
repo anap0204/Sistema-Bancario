@@ -47,8 +47,11 @@ export default function Transfer() {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       setModal(data.transferencia)
-    } catch {
-      setErrorGeneral('Ocurrió un error al procesar la transferencia. Intenta de nuevo.')
+    } catch (err) {
+      const mensaje =
+        err.response?.data?.message ||
+        'Ocurrió un error al procesar la transferencia. Intenta de nuevo.'
+      setErrorGeneral(mensaje)
     } finally {
       setLoading(false)
     }
@@ -124,7 +127,12 @@ export default function Transfer() {
               {errors.concepto && <span style={styles.fieldError}>{errors.concepto}</span>}
             </div>
 
-            {errorGeneral && <p style={styles.errorGeneral}>{errorGeneral}</p>}
+            {errorGeneral && (
+              <div style={styles.errorBox}>
+                <span style={styles.errorIcon}>⚠</span>
+                <p style={styles.errorGeneral}>{errorGeneral}</p>
+              </div>
+            )}
 
             <button type="submit" disabled={loading} style={styles.button}>
               {loading ? 'Procesando...' : 'Realizar transferencia'}
@@ -213,6 +221,21 @@ const styles = {
   fieldError: {
     color: '#c0392b',
     fontSize: '0.8rem',
+  },
+  errorBox: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '10px',
+    backgroundColor: '#fff2f2',
+    border: '1px solid #f5c6c6',
+    borderRadius: '8px',
+    padding: '12px 14px',
+  },
+  errorIcon: {
+    color: '#c0392b',
+    fontSize: '1rem',
+    lineHeight: '1.4',
+    flexShrink: 0,
   },
   errorGeneral: {
     color: '#c0392b',
