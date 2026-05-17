@@ -1,0 +1,151 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f2f5;
+  font-family: system-ui, sans-serif;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15.3px 0 rgba(0, 0, 0, 0.31);
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.brand {
+  color: #182649;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 4px 0;
+}
+
+.subtitle {
+  color: #182649;
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 0 0 32px 0;
+  opacity: 0.7;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  color: #182649;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #cdd3e0;
+  font-size: 0.95rem;
+  outline: none;
+  color: #182649;
+}
+
+.error {
+  color: #c0392b;
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+.button {
+  background-color: #182649;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+
+/*admin panel styles*/
+.admin-container {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 40px;
+  font-family: system-ui, sans-serif;
+}
+
+.admin-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15.3px 0 rgba(0, 0, 0, 0.31);
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+}
+
+.users-table th {
+  text-align: left;
+  padding: 14px;
+  background-color: #182649;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.users-table td {
+  padding: 14px;
+  border-bottom: 1px solid #dfe3eb;
+  color: #182649;
+}
+
+.active-row {
+  background-color: #ffffff;
+}
+
+.blocked-row {
+  background-color: #fff1f0;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status.active {
+  background-color: #d4edda;
+  color: #1e7e34;
+}
+
+.status.blocked {
+  background-color: #f8d7da;
+  color: #c0392b;
+}
+
+.unlock-btn {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+}
+
+.no-action {
+  opacity: 0.5;
+}
