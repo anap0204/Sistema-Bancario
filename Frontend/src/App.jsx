@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Transfer from './pages/Transfer'
 import AdminPanel from './pages/AdminPanel'
 
 function getAuth() {
@@ -43,7 +44,8 @@ export default function App() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
  
         <Route path="/dashboard" element={<ClientRoute><Dashboard /></ClientRoute>} />
- 
+        <Route path="/transfer" element={<ClientRoute><Transfer /></ClientRoute>} />
+
         <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
  
         <Route path="*" element={<Navigate to="/login" replace />} />
