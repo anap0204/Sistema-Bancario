@@ -20,4 +20,25 @@ const getMovimientosByNumeroCuenta = async (numeroCuenta) => {
   return docs
 }
 
-module.exports = { crearTransferencia, getMovimientosByNumeroCuenta }
+const getTotalDiario = async (numeroCuentaEmisora) => {
+  const ahora = new Date()
+  const inicioDia = new Date(
+    Date.UTC(ahora.getUTCFullYear(), ahora.getUTCMonth(), ahora.getUTCDate())
+  )
+
+  const snapshot = await db
+    .collection('transferencias')
+    .where('CuentaEmisora', '==', numeroCuentaEmisora)
+    .get()
+
+  let total = 0
+  snapshot.forEach((doc) => {
+    const fechaDoc = new Date(doc.data().Fecha)
+    if (fechaDoc >= inicioDia) {
+      total += parseFloat(doc.data().Importe || 0)
+    }
+  })
+  return total
+}
+
+module.exports = { crearTransferencia, getMovimientosByNumeroCuenta, getTotalDiario }
