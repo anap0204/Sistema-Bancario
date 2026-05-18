@@ -17,4 +17,6 @@ const actualizarSaldo = async (docId, nuevoSaldo) => {
   await db.collection('cuentas').doc(docId).update({ saldo: nuevoSaldo })
 }
 
-module.exports = { getCuentaByNumero, getCuentaByUsuarioId, actualizarSaldo }
+const getCuentaByUid = getCuentaByUsuarioId
+
+module.exports = { getCuentaByNumero, getCuentaByUsuarioId, getCuentaByUid, actualizarSaldo }
