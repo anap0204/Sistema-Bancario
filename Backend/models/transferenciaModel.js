@@ -1,5 +1,7 @@
 const { db } = require('./database')
 
+// no opcion de actualizar o eliminar para transferencias, solo crear y consultar total diario
+// asi se mantiene inmutabilidad y trazabilidad de las transferencias
 const crearTransferencia = async (datos) => {
   const docRef = db.collection('transferencias').doc()
   const id = docRef.id

@@ -31,7 +31,6 @@ export default function Transfer() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setErrorGeneral('')
     const validationErrors = validate()
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
@@ -46,12 +45,16 @@ export default function Transfer() {
         { monto: parseFloat(monto), cuentaDestino, concepto: concepto.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      setModal(data.transferencia)
+      setModal({
+        type: 'success',
+        importe: data.transferencia.Importe,
+        cuentaReceptora: data.transferencia.CuentaReceptora,
+      })
     } catch (err) {
       const mensaje =
         err.response?.data?.message ||
         'Ocurrió un error al procesar la transferencia. Intenta de nuevo.'
-      setErrorGeneral(mensaje)
+      setModal({ type: 'error', message: mensaje })
     } finally {
       setLoading(false)
     }
@@ -127,13 +130,6 @@ export default function Transfer() {
               {errors.concepto && <span style={styles.fieldError}>{errors.concepto}</span>}
             </div>
 
-            {errorGeneral && (
-              <div style={styles.errorBox}>
-                <span style={styles.errorIcon}>⚠</span>
-                <p style={styles.errorGeneral}>{errorGeneral}</p>
-              </div>
-            )}
-
             <button type="submit" disabled={loading} style={styles.button}>
               {loading ? 'Procesando...' : 'Realizar transferencia'}
             </button>
@@ -143,8 +139,10 @@ export default function Transfer() {
 
       {modal && (
         <Modal
-          importe={modal.Importe}
-          cuentaReceptora={modal.CuentaReceptora}
+          type={modal.type}
+          message={modal.message}
+          importe={modal.importe}
+          cuentaReceptora={modal.cuentaReceptora}
           onClose={handleCloseModal}
         />
       )}
@@ -221,27 +219,6 @@ const styles = {
   fieldError: {
     color: '#c0392b',
     fontSize: '0.8rem',
-  },
-  errorBox: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '10px',
-    backgroundColor: '#fff2f2',
-    border: '1px solid #f5c6c6',
-    borderRadius: '8px',
-    padding: '12px 14px',
-  },
-  errorIcon: {
-    color: '#c0392b',
-    fontSize: '1rem',
-    lineHeight: '1.4',
-    flexShrink: 0,
-  },
-  errorGeneral: {
-    color: '#c0392b',
-    fontSize: '0.875rem',
-    textAlign: 'center',
-    margin: 0,
   },
   button: {
     backgroundColor: '#182649',
