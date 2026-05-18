@@ -11,6 +11,24 @@ const realizarTransferencia = async (req, res) => {
     const { uid } = req.user
     const montoParseado = parseFloat(monto)
  
+    if (!concepto || concepto.trim() === "") {
+      return res.status(400).json({
+        message: 'El concepto de la transferencia es obligatorio.'
+      })
+    }
+
+    if (monto === undefined || monto === null || isNaN(parseFloat(monto))) {
+      return res.status(400).json({
+        message: 'El monto especificado no es válido.'
+      })
+    }
+
+    if (montoParseado <= 0) {
+      return res.status(400).json({
+        message: 'El monto a transferir debe ser un número positivo mayor a cero.'
+      })
+    }
+
     const cuentaReceptor = await getCuentaByNumero(cuentaDestino)
     if (!cuentaReceptor) {
       return res.status(404).json({
