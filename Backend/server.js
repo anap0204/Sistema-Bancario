@@ -11,11 +11,13 @@ app.use(express.json())
 const authRoutes = require('./routes/authRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 const transferenciaRoutes = require('./routes/transferenciaRoutes')
+const cuentaRoutes = require('./routes/cuentaRoutes')
 
 
 app.get('/health', (req, res) => res.sendStatus(200))
 app.use('/api/auth', authRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/transferencias', transferenciaRoutes)
+app.use('/api/cuenta', cuentaRoutes)
 
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`))

@@ -9,13 +9,25 @@ const crearTransferencia = async (datos) => {
   return id
 }
 
+const getMovimientosByNumeroCuenta = async (numeroCuenta) => {
+  const [emisorSnap, receptorSnap] = await Promise.all([
+    db.collection('transferencias').where('CuentaEmisora', '==', numeroCuenta).get(),
+    db.collection('transferencias').where('CuentaReceptora', '==', numeroCuenta).get()
+  ])
+  const docs = [
+    ...emisorSnap.docs.map(d => d.data()),
+    ...receptorSnap.docs.map(d => d.data())
+  ]
+  docs.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha))
+  return docs
+}
+
 const getTotalDiario = async (numeroCuentaEmisora) => {
   const ahora = new Date()
-  // Inicio del día en UTC (00:00:00.000Z)
   const inicioDia = new Date(
     Date.UTC(ahora.getUTCFullYear(), ahora.getUTCMonth(), ahora.getUTCDate())
   )
- 
+
   const snapshot = await db
     .collection('transferencias')
     .where('CuentaEmisora', '==', numeroCuentaEmisora)
@@ -32,4 +44,4 @@ const getTotalDiario = async (numeroCuentaEmisora) => {
   return total
 }
 
-module.exports = { crearTransferencia, getTotalDiario }
+module.exports = { crearTransferencia, getMovimientosByNumeroCuenta, getTotalDiario }
