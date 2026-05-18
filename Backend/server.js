@@ -13,6 +13,8 @@ const adminRoutes = require('./routes/adminRoutes')
 const transferenciaRoutes = require('./routes/transferenciaRoutes')
 const cuentaRoutes = require('./routes/cuentaRoutes')
 
+
+app.get('/health', (req, res) => res.sendStatus(200))
 app.use('/api/auth', authRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/transferencias', transferenciaRoutes)

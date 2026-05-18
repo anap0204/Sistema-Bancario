@@ -1,30 +1,52 @@
-export default function Modal({ importe, cuentaReceptora, onClose }) {
-  const importeFormateado = parseFloat(importe).toLocaleString('es-MX', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })
-
+export default function Modal({ type = 'success', title, message, importe, cuentaReceptora, onClose }) {
+  const isSuccess = type === 'success'
+ 
+  const importeFormateado =
+    importe != null
+      ? parseFloat(importe).toLocaleString('es-MX', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      : null
+ 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.card}>
-        <div style={styles.icon}>✓</div>
-        <h2 style={styles.title}>Transferencia realizada con éxito</h2>
-        <div style={styles.details}>
-          <p style={styles.detail}>
-            <span style={styles.detailLabel}>Monto transferido</span>
-            <span style={styles.detailValue}>${importeFormateado}</span>
-          </p>
-          <p style={styles.detail}>
-            <span style={styles.detailLabel}>Cuenta destino</span>
-            <span style={styles.detailValue}>{cuentaReceptora}</span>
-          </p>
+    <div style={styles.overlay} onClick={onClose}>
+      <div style={styles.card} onClick={(e) => e.stopPropagation()}>
+        <div style={{ ...styles.icon, backgroundColor: isSuccess ? '#182649' : '#c0392b' }}>
+          {isSuccess ? '✓' : '✕'}
         </div>
-        <button style={styles.button} onClick={onClose}>Aceptar</button>
+ 
+        <h2 style={styles.title}>
+          {title || (isSuccess ? 'Transferencia realizada con éxito' : 'Error en la operación')}
+        </h2>
+ 
+        {message && <p style={styles.message}>{message}</p>}
+ 
+        {isSuccess && importeFormateado && (
+          <div style={styles.details}>
+            <p style={styles.detail}>
+              <span style={styles.detailLabel}>Monto transferido</span>
+              <span style={styles.detailValue}>${importeFormateado}</span>
+            </p>
+            {cuentaReceptora && (
+              <p style={styles.detail}>
+                <span style={styles.detailLabel}>Cuenta destino</span>
+                <span style={styles.detailValue}>{cuentaReceptora}</span>
+              </p>
+            )}
+          </div>
+        )}
+ 
+        <button
+          style={{ ...styles.button, backgroundColor: isSuccess ? '#182649' : '#c0392b' }}
+          onClick={onClose}
+        >
+          Aceptar
+        </button>
       </div>
     </div>
   )
 }
-
 const styles = {
   overlay: {
     position: 'fixed',
@@ -66,6 +88,13 @@ const styles = {
     fontWeight: '700',
     textAlign: 'center',
     margin: 0,
+  },
+  message: {
+    color: '#555',
+    fontSize: '0.9rem',
+    textAlign: 'center',
+    margin: 0,
+    lineHeight: '1.5',
   },
   details: {
     width: '100%',
